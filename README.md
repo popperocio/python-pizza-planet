@@ -63,6 +63,18 @@ python3 manage.py db migrate
 python3 manage.py db upgrade
 ```
 
+- Run hooks (Only needed for the first run):
+
+```bash
+make hooks
+```
+
+- Delete hooks (if needed, run this command to delete the hooks)
+```bash
+make delete-hooks
+```
+
+
 - If you want to use the hot reload feature set FLASK_ENV before running the project:
 
 _For linux/MacOS users:_
