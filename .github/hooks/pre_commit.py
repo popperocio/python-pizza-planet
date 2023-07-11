@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 import sys
-from .constants import plz_branch
-from .utils import is_main_branch, is_valid_branch_name, get_error_message, get_branch_name
+from constants import plz_branch
+from utils import is_main_branch, is_valid_branch_name, get_error_message, get_branch_name
 
 
 def main():
