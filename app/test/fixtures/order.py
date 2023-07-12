@@ -53,8 +53,12 @@ def create_orders(client, order_uri, create_ingredients, create_beverages, creat
     return orders
 
 
-
 @pytest.fixture
 def create_order(client, order_uri, order)-> dict:
     response = client.post(order_uri, json=order)
     return response
+
+
+@pytest.fixture
+def empty_orders():
+    return []
