@@ -32,7 +32,7 @@ git clone https://github.com/ioet/python-pizza-planet.git
 - Create a virtual environment in the root folder of the project
 
 ```bash
-python3 -m venv venv
+make create-venv
 ```
 
 - Activate the virtual environment (In vscode if you select the virtual env for your project it will activate once you open a new console window)
@@ -40,7 +40,7 @@ python3 -m venv venv
 _For linux/MacOS users:_
 
 ```bash
-source venv/bin/activate 
+make run-venv
 ```
 
 _For windows users:_
@@ -52,15 +52,13 @@ _For windows users:_
 - Install all necessary dependencies:
 
 ```bash
-pip3 install -r requirements.txt
+make install-only-requirements
 ```
 
 - Start the database (Only needed for the first run):
 
 ```bash
-python3 manage.py db init
-python3 manage.py db migrate
-python3 manage.py db upgrade
+make install-db
 ```
 
 - Run hooks (Only needed for the first run):
@@ -92,7 +90,7 @@ set FLASK_ENV=development
 - Run the project with:
 
 ```bash
-python3 manage.py run
+make run
 ```
 
 ## Running the frontend

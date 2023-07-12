@@ -1,0 +1,36 @@
+name: Pizza Planet
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest coverage
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Create and activate virtual environment
+        run: |
+          make create-venv
+          make run-venv
+      - name: Test with pytest and coverage
+        run: |
+          make run
+          coverage run -m pytest -v app/test/
+          coverage report --show-missing
+

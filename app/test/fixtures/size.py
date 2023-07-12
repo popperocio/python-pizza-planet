@@ -38,3 +38,8 @@ def create_sizes(client, size_uri) -> list:
         new_size = client.post(size_uri, json=size_mock())
         sizes.append(new_size.json)
     return sizes
+
+
+@pytest.fixture
+def empty_sizes():
+    return []
