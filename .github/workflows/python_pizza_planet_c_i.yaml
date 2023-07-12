@@ -30,7 +30,6 @@ jobs:
           make run-venv
       - name: Test with pytest and coverage
         run: |
-          make run
           coverage run -m pytest -v app/test/
           coverage report --show-missing
 
