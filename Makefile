@@ -34,3 +34,7 @@ delete-hooks:
 	rm .git/hooks/utils.py
 	rm .git/hooks/constants.py
 	rm .git/hooks/pre-commit
+
+
+seed:
+	python manage.py seed run
