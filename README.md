@@ -61,6 +61,11 @@ make install-only-requirements
 make install-db
 ```
 
+- Seed database:
+```bash
+    make seed
+```
+
 - Run hooks (Only needed for the first run):
 
 ```bash
