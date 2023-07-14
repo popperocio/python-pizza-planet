@@ -4,7 +4,7 @@ from .models import Order, OrderDetail, Ingredient
 from sqlalchemy.sql import func, desc
 import calendar
 
-class  ConcreteReport(ReportCreator):
+class  Report(ReportCreator):
     
     order = Order
     order_detail = OrderDetail

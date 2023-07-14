@@ -106,6 +106,7 @@ class ReportManager(BaseManager):
 
     @classmethod
     def get_reports(cls):
-        report = ReporterFactory("report")
-        report.factory_method()
-        return report.report
+        report_factory = ReporterFactory("report")
+        report_factory.factory_method()
+        report = report_factory.factory_method()
+        return report

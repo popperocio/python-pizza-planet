@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from .concrete_creator_report import ConcreteReport
+from .report import Report
 
 
 class ReporterFactory():
@@ -12,7 +12,7 @@ class ReporterFactory():
 
     def factory_method(self):
         if self.report== "report":
-            report = ConcreteReport().create_report()
+            report = Report().create_report()
             return report
 
     
