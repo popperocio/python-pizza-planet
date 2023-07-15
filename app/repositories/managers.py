@@ -2,6 +2,8 @@ from typing import Any, List, Optional, Sequence
 
 from sqlalchemy.sql import text, column, func, desc
 
+from app.repositories.reporter import ReporterFactory
+
 from .models import Beverage, Ingredient, Order, OrderDetail, Size, db
 from .serializers import (IngredientSerializer, OrderSerializer,
                           SizeSerializer, BeverageSerializer, ma)
@@ -104,51 +106,7 @@ class ReportManager(BaseManager):
 
     @classmethod
     def get_reports(cls):
-        report = {}
-        best_customers = []
-        most_requested_ingredient = []
-        date_with_most_revenue = []
-        customers = cls.session.query(
-                                    cls.order.client_name,
-                                    cls.order.client_dni,
-                                    func.count(cls.order.client_dni).label('total_sales')
-                                ).group_by(
-                                    cls.order.client_dni
-                                ).order_by(
-                                    desc('total_sales')
-                                ).limit(3).all()
-        for customer in customers:
-            best_customers.append(
-                {'client_name': customer.client_name, 'total_sales': customer.total_sales})
-        
-        ingredients = db.session.query(
-                                        cls.ingredient.name,
-                                        func.count(cls.order_detail.ingredient_id).label('total_requests')
-                                    ).join(
-                                        cls.order_detail, cls.ingredient._id == cls.order_detail.ingredient_id
-                                    ).group_by(
-                                        cls.order_detail.ingredient_id
-                                    ).order_by(
-                                        desc('total_requests')
-                                    ).limit(1)  
-        for ingredient in ingredients:                                                       
-            most_requested_ingredient.append(
-                    {'name': ingredient.name, 'total_requests': ingredient.total_requests})
-
-        months= cls.session.query(
-                                func.extract('month', cls.order.date).label('month'),
-                                func.sum(cls.order.total_price).label('total_sales_revenue')
-                                ).group_by(
-                                    func.extract('month', cls.order.date)
-                                ).order_by(
-                                    func.sum(cls.order.total_price).desc()
-                                ).all()
-        if months:
-            month_name = calendar.month_name[months[0].month]
-            date_with_most_revenue.append({'month': month_name, 'total_sales_revenue': months[0].total_sales_revenue})
-            
-        report['best_customers'] = best_customers
-        report['most_requested_ingredient'] = most_requested_ingredient
-        report['date_with_most_revenue'] = date_with_most_revenue
-
+        report_factory = ReporterFactory("report")
+        report_factory.factory_method()
+        report = report_factory.factory_method()
         return report
