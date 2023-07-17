@@ -1,4 +1,7 @@
 import sqlite3
+
+from datetime import datetime
+import random
 from .utils import generate_clients, generate_order, BEVERAGES, INGREDIENTS, NUMBER_CLIENTS, NUMBER_ORDERS, SIZES
 from faker import Faker
 
@@ -31,7 +34,7 @@ def insert_seed_ingredient(cursor, ingredient):
     
 def insert_seed_beverage(cursor, beverage):
     cursor.execute('''
-        INSERT INTO bevenkhurage (_id, name, price)
+        INSERT INTO beverage (_id, name, price)
         VALUES (?, ?, ?)
     ''', (beverage))
 
@@ -43,7 +46,14 @@ def seed():
             clients, INGREDIENTS, BEVERAGES, SIZES)
         insert_seed_order(cursor, order, total_price)
     
-    
+    for size in SIZES:
+        insert_seed_size(cursor, size)
+
+    for ingredient in INGREDIENTS:
+        insert_seed_ingredient(cursor, ingredient)
+
+    for beverage in BEVERAGES:
+        insert_seed_beverage(cursor, beverage)
     
     connection.commit()
     connection.close()

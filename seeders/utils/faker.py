@@ -23,7 +23,6 @@ def generate_order(clients, ingredients, beverages, sizes):
     size = random.choice(sizes)
     order_date= fake.date_time_between(
             start_date=MIN_DATE, end_date=MAX_DATE, tzinfo=None)
-    print(order_date)
     order = {
         'client_name': client["client_name"],
         'client_dni': fake.random_number(digits=10),
@@ -37,13 +36,11 @@ def generate_order(clients, ingredients, beverages, sizes):
     beverages= generate_beverages(beverages)
     total_price = calculate_total_price(
         size_price, ingredients, beverages)
-    print(order)
 
     return order, ingredients, beverages, total_price
 
 
 def calculate_total_price(size, ingredients, beverages):
-    print(size)
     total_price: float = float(size)
     if ingredients:
         for ingredient in ingredients:
@@ -83,7 +80,6 @@ def generate_size(sizes):
         },
         "size_price": float(size_price)
     }
-    print("**", size_details)
     return size_details
 
 
