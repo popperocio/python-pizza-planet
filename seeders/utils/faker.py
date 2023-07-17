@@ -1,6 +1,8 @@
 import random
 from faker import Faker
-from utils import MIN_DATE, MAX_DATE
+from .constants import MIN_DATE, MAX_DATE
+
+
 fake = Faker()
 
 

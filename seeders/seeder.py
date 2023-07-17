@@ -1,17 +1,9 @@
 import sqlite3
-from utils import(
-    generate_clients,
-    generate_order,
-    NUMBER_CLIENTS,
-    NUMBER_ORDERS,
-    INGREDIENTS,
-    BEVERAGES,
-    SIZES
-    )
+from .utils import generate_clients, generate_order, BEVERAGES, INGREDIENTS, NUMBER_CLIENTS, NUMBER_ORDERS, SIZES
+from faker import Faker
 
+fake = Faker()
 
-conn = sqlite3.connect('pizza.sqlite')
-cursor = conn.cursor()
 
 clients = generate_clients(NUMBER_CLIENTS)
 
@@ -39,25 +31,24 @@ def insert_seed_ingredient(cursor, ingredient):
     
 def insert_seed_beverage(cursor, beverage):
     cursor.execute('''
-        INSERT INTO beverage (_id, name, price)
+        INSERT INTO bevenkhurage (_id, name, price)
         VALUES (?, ?, ?)
     ''', (beverage))
 
-
-for order in range(NUMBER_ORDERS):
-    order, ingredients, beverages, total_price = generate_order(
-        clients, INGREDIENTS, BEVERAGES, SIZES)
-    insert_seed_order(cursor, order, total_price)
-   
-
-conn.commit()
-conn.close()
-
-
-
-
-
+def seed():
+    connection = sqlite3.connect('pizza.sqlite')
+    cursor = connection.cursor()
+    for order in range(NUMBER_ORDERS):
+        order, ingredients, beverages, total_price = generate_order(
+            clients, INGREDIENTS, BEVERAGES, SIZES)
+        insert_seed_order(cursor, order, total_price)
+    
+    
+    
+    connection.commit()
+    connection.close()
 
 
 
+seed()
 
