@@ -1,6 +1,8 @@
 import random
 from faker import Faker
-from utils import MIN_DATE, MAX_DATE
+from .constants import MIN_DATE, MAX_DATE
+
+
 fake = Faker()
 
 
@@ -21,27 +23,31 @@ def generate_order(clients, ingredients, beverages, sizes):
     size = random.choice(sizes)
     order_date= fake.date_time_between(
             start_date=MIN_DATE, end_date=MAX_DATE, tzinfo=None)
-    print(order_date)
+    ingredients= generate_ingredient(ingredients)
+    beverages= generate_beverages(beverages)
     order = {
+        'order_id':fake.random_number(digits=2),
         'client_name': client["client_name"],
         'client_dni': fake.random_number(digits=10),
         'client_address': fake.address(),
         'client_phone': fake.phone_number(),
         'date': order_date.strftime('%Y-%m-%d %H:%M:%S'),
         'size_id': size[0], 
+        "ingredients": [
+            ingredients[0]
+            ],
+        "beverages": [
+            beverages[0]
+        ]
     }
     size_price =float(size[2])
-    ingredients= generate_ingredient(ingredients)
-    beverages= generate_beverages(beverages)
     total_price = calculate_total_price(
         size_price, ingredients, beverages)
-    print(order)
 
-    return order, ingredients, beverages, total_price
+    return order,ingredients, beverages, total_price
 
 
 def calculate_total_price(size, ingredients, beverages):
-    print(size)
     total_price: float = float(size)
     if ingredients:
         for ingredient in ingredients:
@@ -81,7 +87,6 @@ def generate_size(sizes):
         },
         "size_price": float(size_price)
     }
-    print("**", size_details)
     return size_details
 
 
@@ -99,3 +104,4 @@ def generate_beverages(beverages):
             },
             "beverage_price": float(beverage_price)
         })
+    return beverage_details
